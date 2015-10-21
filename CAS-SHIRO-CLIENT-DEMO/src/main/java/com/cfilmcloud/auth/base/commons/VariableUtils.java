@@ -1,0 +1,117 @@
+package com.cfilmcloud.auth.base.commons;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.lang3.ArrayUtils;
+
+import com.cfilmcloud.auth.base.commons.enumeration.FieldType;
+import com.cfilmcloud.auth.base.commons.enumeration.ValueEnum;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
+@SuppressWarnings({"unchecked"})
+public class VariableUtils {
+
+	/**
+	 * 默认字典值的值名称
+	 */
+	public static final String DEFAULT_VALUE_NAME = "value";
+	/**
+	 * 默认字典值的键名称
+	 */
+	public static final String DEFAULT_KEY_NAME = "key";
+
+	/**
+	 * 通过{@link com.saituo.order.commons.enumeration.ValueEnum} 接口子类 class
+	 * 获取数据字典集合
+	 * 
+	 * @param enumClass
+	 *            枚举 class
+	 * @param ignore
+	 *            要忽略的值
+	 * 
+	 * @return key value 数据字典 Map 集合
+	 */
+	public static List<Map<String, Object>> getVariables(Class<? extends Enum<? extends ValueEnum<?>>> enumClass,
+			Object... ignore) {
+
+		List<Map<String, Object>> result = Lists.newArrayList();
+		Enum<? extends ValueEnum<?>>[] values = enumClass.getEnumConstants();
+
+		for (Enum<? extends ValueEnum<?>> o : values) {
+			ValueEnum<?> ve = (ValueEnum<?>) o;
+			Object value = ve.getValue();
+
+			if (!ArrayUtils.contains(ignore, value)) {
+				Map<String, Object> dictionary = new HashMap<String, Object>();
+				dictionary.put(DEFAULT_VALUE_NAME, value);
+				dictionary.put(DEFAULT_KEY_NAME, ve.getName());
+				result.add(dictionary);
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * 获取Enum中key value对应关系
+	 * 
+	 * @param enumClass
+	 * @return
+	 */
+	public static Map<String, Object> getVariables(Class<? extends Enum<? extends ValueEnum<?>>> enumClass) {
+
+		Map<String, Object> result = Maps.newHashMap();
+		Enum<? extends ValueEnum<?>>[] values = enumClass.getEnumConstants();
+
+		for (Enum<? extends ValueEnum<?>> o : values) {
+			ValueEnum<?> ve = (ValueEnum<?>) o;
+			Object value = ve.getValue();
+			result.put(String.valueOf(value), ve.getName());
+		}
+		return result;
+	}
+
+	/**
+	 * 将值转换为对应的类型
+	 * 
+	 * @param value
+	 *            值
+	 * 
+	 * @return 转换好的值
+	 */
+	public static <T> T typeCast(Object value) {
+		return (T) value;
+	}
+
+	/**
+	 * 将值转换为对应的类型
+	 * 
+	 * @param value
+	 *            值
+	 * @param typeClass
+	 *            类型 Class
+	 * 
+	 * @return 转换好的值
+	 */
+	public static <T> T typeCast(Object value, Class<T> typeClass) {
+		return (T) (value == null ? null : ConvertUtils.convert(value, typeClass));
+	}
+
+	/**
+	 * 将 String 类型的值转换为对应的类型
+	 * 
+	 * @param value
+	 *            值
+	 * @param className
+	 *            类名称,参考{@link com.saituo.order.commons.enumeration.FieldType}
+	 * 
+	 * @return 转换好的值
+	 */
+	public static <T> T typeCast(String value, String className) {
+		Class<?> type = FieldType.getClass(className);
+		return (T) typeCast(value, type);
+	}
+}

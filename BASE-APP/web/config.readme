@@ -1,0 +1,24 @@
+web部分
+需独立配置在Web服务器上Nginx:
+
+URL为:
+http://host:port/privilege/assert/
+
+注意:
+1.项目中使用了font-awesome，需要在Nginx上配置以下:
+例如:
+server {
+		listen       80;
+		server_name  localhost;
+		
+		/************* 需要配置 start ****************/
+		location ~* \.(eot|otf|ttf|woff|svg)$ {
+			add_header Access-Control-Allow-Origin *;
+		}
+		/************** 需要配置 end *****************/
+		
+		location / {
+			root   {url}/html;
+			index  index.html index.htm;
+		}
+}

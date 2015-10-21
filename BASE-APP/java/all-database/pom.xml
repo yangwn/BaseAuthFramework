@@ -1,0 +1,151 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.base.auth.framework</groupId>
+		<artifactId>privilege</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>all-database</artifactId>
+	<packaging>pom</packaging>
+	<name>Database Scripts</name>
+	<description>Database Scripts</description>
+	
+	<properties>
+		<!-- mysql连接 需自定义修改 -->
+		<jdbc.database.name>casdemo</jdbc.database.name>
+		<host.url>localhost</host.url>
+		<jdbc.username>root</jdbc.username>
+		<jdbc.password>root</jdbc.password>
+		
+		<!--无需修改-->
+		<jdbc.url>jdbc:mysql://${host.url}:3306/${jdbc.database.name}</jdbc.url>
+		<cdbi.jdbc.url>jdbc:mysql://${host.url}:3306/mysql</cdbi.jdbc.url>
+		<jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
+		<mysql.connector.version>5.1.36</mysql.connector.version>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.connector.version}</version>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<!-- ant插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<profiles>
+		<!--重建数据库 -->
+		<profile>
+			<id>create-db</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.kuali.maven.plugins</groupId>
+						<artifactId>sql-maven-plugin</artifactId>
+						<version>1.8</version>
+
+						<dependencies>
+							<dependency>
+								<groupId>mysql</groupId>
+								<artifactId>mysql-connector-java</artifactId>
+								<version>${mysql.connector.version}</version>
+							</dependency>
+						</dependencies>
+
+						<configuration>
+							<driver>${jdbc.driver}</driver>
+							<url>${cdbi.jdbc.url}</url>
+							<username>${jdbc.username}</username>
+							<password>${jdbc.password}</password>
+							<keepFormat>true</keepFormat>
+							<printResultSet>false</printResultSet>
+							<autocommit>true</autocommit>
+							<settingsKey>sensibleKey</settingsKey>
+							<skip>false</skip>
+						</configuration>
+
+						<executions>
+							<execution>
+								<id>drop-db-before-test-if-any</id>
+								<phase>process-resources</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<url>${cdbi.jdbc.url}</url>
+									<autocommit>true</autocommit>
+									<sqlCommand>drop database ${jdbc.database.name}</sqlCommand>
+									<onError>continue</onError>
+								</configuration>
+							</execution>
+
+							<execution>
+								<id>create-db</id>
+								<phase>process-resources</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<url>${cdbi.jdbc.url}</url>
+									<autocommit>true</autocommit>
+									<sqlCommand>create database ${jdbc.database.name} CHARACTER SET utf8 COLLATE utf8_bin</sqlCommand>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		
+		<!-- 建表及初始化表数据 -->
+		<profile>
+			<id>init-db</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>process-resources</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<target>
+										<sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}"
+											src="db-scripts/create_table_for_privilege.sql" onerror="stop" encoding="utf-8">
+											<classpath refid="maven.test.classpath" />
+										</sql>
+										<!--
+										<sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}"
+											src="db-scripts/init-test.sql" onerror="stop" encoding="utf-8">
+											<classpath refid="maven.test.classpath" />
+										</sql>
+										-->
+									</target>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

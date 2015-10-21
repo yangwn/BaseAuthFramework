@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+  <classpathentry kind="src" path="src/main/java" including="**/*.java" excluding="**/.svn/**|**/.git/**"/>
+  <classpathentry kind="src" path="src/main/resources" excluding="**/*.java"/>
+  <classpathentry kind="output" path="target/classes"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="src" path="/privilege-model"/>
+  <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis/3.2.8/mybatis-3.2.8.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis-spring/1.2.2/mybatis-spring-1.2.2.jar"/>
+</classpath>

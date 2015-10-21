@@ -1,0 +1,3 @@
+http://localhost:8080/cas/proxyValidate?ticket=ST-67-54zWuKo9fNHwdIJilqM4-cas01.example.org&service=http%3A%2F%2Flocalhost%3A8080%2Fclient%2F
+
+http://localhost:8080/cas/proxyValidate?ticket=ST-69-HIXACquGy66wzRC3xVSj-cas01.example.org&service=http%3A%2F%2Flocalhost%3A8080%2Fclient%2F
