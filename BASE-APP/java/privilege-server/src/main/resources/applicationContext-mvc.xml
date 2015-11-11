@@ -45,7 +45,7 @@
 		<!-- 权限拦截  -->
 		<mvc:interceptor>
 			<mvc:mapping path="/**/*.do" />
-			<bean class="com.cl.privilege.interceptor.PrivilegeInterceptor"/>
+			<bean class="com.base.privilege.interceptor.PrivilegeInterceptor"/>
 		</mvc:interceptor>		
 	</mvc:interceptors>	
 

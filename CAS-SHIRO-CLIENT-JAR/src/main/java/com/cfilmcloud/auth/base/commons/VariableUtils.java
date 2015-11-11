@@ -12,7 +12,7 @@ import com.cfilmcloud.auth.base.commons.enumeration.ValueEnum;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-@SuppressWarnings({"unchecked"})
+@SuppressWarnings({ "unchecked" })
 public class VariableUtils {
 
 	/**

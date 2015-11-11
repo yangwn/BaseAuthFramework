@@ -13,4 +13,24 @@
 	将下列package类使用dubbo进行调用，该服务位于privilege-api-server中：
 	./BASE-APP/java/privilege-server/src/main/java/com/base/privilege/biz/external 
 	4).前端程序，需要nginx服务。
-	
+		在nginx中增加:
+		========================================================================================
+			server {
+			        listen       8001;
+			        server_name  localhost;
+					location ~* \.(eot|otf|ttf|woff|svg)$ {
+						add_header Access-Control-Allow-Origin *;
+					}
+
+			        #charset koi8-r;
+			        #access_log  logs/host.access.log  main;
+			        location / {
+			            root   html;
+			            index  index.html index.htm;
+			        }
+		========================================================================================
+		
+	5).运行:
+		./build.sh
+		mvn jetty:run -Djetty.port=10002
+		http://localhost:10002/

@@ -2,7 +2,7 @@
 
 1.使用CAS与Shiro结合进行权限认证与授权的SSO 权限管理与认证框架：
 
-BASE-APP: 权限管理与权限服务提供商.
+BASE-APP: 权限管理与权限服务提供商. 
 CAS-SHIRO-CLIENT-JAR: 子系统需要引入的权限jar.
 CAS-SHIRO-CLIENT-JAR-DEMO : 引入了权限jar后的子系统的 example.
 CAS-SHIRO-CLIENT-DEMO: Client端开发阶段的Demo.
