@@ -50,7 +50,7 @@
   <classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-config/3.2.0.RELEASE/spring-security-config-3.2.0.RELEASE.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jasig/service/persondir/person-directory-impl/1.5.1/person-directory-impl-1.5.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/sun/xml/bind/jaxb-impl/2.2/jaxb-impl-2.2.jar"/>
-  <classpathentry kind="var" path="M2_REPO/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-collections/commons-collections/3.2.2/commons-collections-3.2.2.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-lang/commons-lang/2.5/commons-lang-2.5.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jasig/service/persondir/person-directory-api/1.5.1/person-directory-api-1.5.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/commons/commons-lang3/3.1/commons-lang3-3.1.jar"/>
